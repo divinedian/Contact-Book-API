@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.6" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="5.0.6" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.6">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ContactBook.Lib.DTO\ContactBook.Lib.DTO.csproj" />
+    <ProjectReference Include="..\ContactBook.Lib.Model\ContactBook.Lib.Model.csproj" />
+  </ItemGroup>
+
+</Project>

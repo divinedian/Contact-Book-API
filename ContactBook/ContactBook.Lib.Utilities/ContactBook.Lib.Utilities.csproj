@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="4.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.15" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.6" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ContactBook.Lib.DTO\ContactBook.Lib.DTO.csproj" />
+    <ProjectReference Include="..\ContactBook.Lib.Infrastructure\ContactBook.Lib.Infrastructure.csproj" />
+    <ProjectReference Include="..\ContactBook.Lib.Model\ContactBook.Lib.Model.csproj" />
+  </ItemGroup>
+
+</Project>
