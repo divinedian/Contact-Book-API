@@ -219,23 +219,32 @@ namespace ContactBook.Controllers
             }
         }
 
-        public IActionResult Search([FromForm] SearchDTO model)
+        /// <summary>
+        /// all logged in user can search for an existing user by name, city or state
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [HttpGet("search")]
+        [Authorize(Roles = "admin,regular")]
+        public IActionResult Search([FromQuery] SearchDTO model)
         {
-            var contactToReturn = _contactRepository.Search(model.Name,model.State,model.City);
+            var contactToReturn = _contactRepository.Search(model.Name, model.State, model.City);
             if (contactToReturn == null)
             {
                 return NotFound("No Contact associated search ");
             }
-            /*var response = new ResgisterContactResponse
+            var output = new List<SearchResponseDTO>();
+            foreach (var contact in contactToReturn)
             {
-                Id = contactToReturn.ContactId,
-                ContactName = $"{contactToReturn.FirstName} {contactToReturn.LastName}",
-                PhoneNumber = contactToReturn.PhoneNumber,
-
-            };*/
-
-
-            return Ok();
+                var response = new SearchResponseDTO
+                {
+                    Name = $"{contact.FirstName} {contact.LastName}",
+                    Email = contact.Email,
+                    Address = $"{contact.Address.Street} {contact.Address.City}, {contact.Address.State}, {contact.Address.Country}"
+                };
+                output.Add(response);
+            }
+            return Ok(output);
         }
     }
 }
