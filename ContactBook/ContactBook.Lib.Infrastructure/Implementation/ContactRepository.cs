@@ -3,6 +3,7 @@ using ContactBook.Lib.DTO;
 using ContactBook.Lib.Infrastructure;
 using ContactBook.Lib.Model;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -48,9 +49,31 @@ namespace ContactBook.Implementation
             await _ctx.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<Contact>> Get()
+        public async Task<List<ContactDto>> Get(PaginationFilter filter)
         {
-            return await _ctx.Contacts.Include(x => x.Address).ToListAsync();
+            List<ContactDto> contactsToGet = new List<ContactDto>();
+            var validPagesFilter = new PaginationFilter(filter.CurrentPage);
+
+            var resp = await _ctx.Contacts.Include(x => x.Address)
+                .Skip((validPagesFilter.CurrentPage-1)*4)
+                .Take(4).ToListAsync();
+            var num = resp.Count();
+
+            for(int i=0; i<num; i++)
+            {
+                ContactDto contactDto = new ContactDto()
+                {
+                    FirstName = resp[i].FirstName,
+                    LastName = resp[i].LastName,
+                    Email = resp[i].Email,
+                    Street = resp[i].Address.Street,
+                    City = resp[i].Address.City,
+                    State = resp[i].Address.State,
+                    Country = resp[i].Address.Country
+                };
+                contactsToGet.Add(contactDto);
+            }
+            return contactsToGet;
         }
 
         public async Task<Contact> GetByIdOrEmail(string emailorId)

@@ -49,15 +49,11 @@ namespace ContactBook.Controllers
         /// <returns></returns>
         [HttpGet("all-contacts")]
         [Authorize(Roles = "admin")]
-        public async Task<IActionResult> GetContacts()
+        public async Task<IActionResult> GetContacts([FromQuery] PaginationFilter filter)
         {
-            var contacts = new List<Contact>();
-            var resp = await _contactRepository.Get();
-            foreach (var res in resp)
-            {
-                contacts.Add(res);
-            }
-            return Ok(contacts);
+            var resp = await _contactRepository.Get(filter);
+            return Ok(resp);
+            
         }
 
         /// <summary>

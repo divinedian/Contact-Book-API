@@ -1,5 +1,6 @@
 ﻿using ContactBook.Lib.DTO;
 using ContactBook.Lib.Model;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace Contact_book_Application.Data.Interface
 {
     public interface IContactRepository
     {
-        Task<IEnumerable<Contact>> Get();
+        Task<List<ContactDto>> Get(PaginationFilter filter);
         Task<Contact> GetById(int Id);
         Task<Contact> GetByIdOrEmail(string emailorId);
         Task<Contact> GetByEmail(string email);
