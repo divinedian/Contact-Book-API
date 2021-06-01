@@ -22,26 +22,15 @@ namespace ContactBook.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private readonly Cloudinary _cloudinary;
-        private readonly IConfiguration _config;
-        // private readonly List<MyUser> _users;
         private readonly IMapper _mapper;
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
         private readonly ITokenGenerator _tokenGenerator;
         private readonly IUserRepository _userRepository;
 
-        public UserController(IConfiguration config, IMapper mapper, UserManager<AppUser> userManager, 
+        public UserController(IMapper mapper, UserManager<AppUser> userManager, 
             SignInManager<AppUser> signInManager, ITokenGenerator tokenGenerator, IUserRepository userRepository)
         {
-            _config = config;
-            Account account = new Account
-            {
-                Cloud = _config.GetSection("CloudinarySettings:CloudName").Value,
-                ApiKey = _config.GetSection("CloudinarySettings:ApiKey").Value,
-                ApiSecret = _config.GetSection("CloudinarySettings:ApiSecret").Value,
-            };
-            _cloudinary = new Cloudinary(account);
             _mapper = mapper;
             _userManager = userManager;
             _signInManager = signInManager;

@@ -126,7 +126,8 @@ namespace ContactBook
             {
                 endpoints.MapControllers();
             });
-            Seed.EnsureCreated(app);
+            Seed seed = new Seed(Configuration);
+            seed.EnsureCreated(app);
         }
     }
 }

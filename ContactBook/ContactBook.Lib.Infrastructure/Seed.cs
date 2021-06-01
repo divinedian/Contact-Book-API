@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -12,11 +13,21 @@ namespace ContactBook.Lib.Infrastructure
 {
     public class Seed
     {
-        private const string adminEmail = "admin@gmail.com";
-        private const string adminPassword = "Admin@1234";
-        private const string regularEmail = "regular@gmail.com";
-        private const string regularPassword = "Regular@1234";
-        public static void EnsureCreated(IApplicationBuilder app)
+        private readonly IConfiguration _config;
+        private string adminEmail;
+        private string adminPassword;
+        private string regularEmail;
+        private string regularPassword;
+
+        public Seed(IConfiguration config)
+        {
+            _config = config;
+            adminEmail = _config.GetSection("LoginDetails:adminEmail").Value;
+            adminPassword = _config.GetSection("LoginDetails:adminPassword").Value;
+            regularEmail = _config.GetSection("LoginDetails:regularEmail").Value;
+            regularPassword = _config.GetSection("LoginDetails:regularPassword").Value;
+        }
+        public void EnsureCreated(IApplicationBuilder app)
         {
             ContactBookDbContext ctx = app.ApplicationServices.CreateScope().ServiceProvider.GetRequiredService<ContactBookDbContext>();
 

@@ -124,14 +124,13 @@ namespace ContactBook.Implementation
         public async Task<bool> Update(int Id, ContactDto contact)
         {
             var foundContact = await GetById(Id);
-            foundContact.FirstName = contact.FirstName != null ? contact.FirstName : foundContact.FirstName;
-            foundContact.LastName = contact.LastName != null ? contact.LastName : foundContact.LastName;
-            foundContact.Email = contact.Email != null ? contact.Email : foundContact.Email;
-            foundContact.Address.Street = contact.Street != null ? contact.Street : foundContact.Address.Street;
-            foundContact.Address.City = contact.City != null ? contact.City : foundContact.Address.City;
-            foundContact.Address.State = contact.State != null ? contact.State : foundContact.Address.State;
-            foundContact.Address.Country = contact.Country != null ? contact.Country : foundContact.Address.Country;
-
+            foundContact.FirstName = contact.FirstName;
+            foundContact.LastName = contact.LastName;
+            foundContact.Email = contact.Email;
+            foundContact.Address.Street = contact.Street;
+            foundContact.Address.City = contact.City;
+            foundContact.Address.State = contact.State;
+            foundContact.Address.Country = contact.Country;
 
             _ctx.Update(foundContact);
             return await _ctx.SaveChangesAsync() > 0;
